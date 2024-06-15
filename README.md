@@ -42,7 +42,8 @@ Fork from [valentinbreiz](https://github.com/valentinbreiz/PS4-Payload-Sender)
 
 # UPDATE 
 
-![EzPayloadSenderv1 00_6](https://github.com/DjPopol/EzPayloadSender/assets/168917709/470fec93-2837-48de-8a74-83318f7ca1eb)
+![EzPayloadSenderv1 00_6](https://github.com/DjPopol/EzPayloadSender/assets/168917709/66057a8c-3b01-4873-a739-eef9594620b6)
+
 
 ![EzPayloadSenderv1 00_5](https://github.com/DjPopol/EzPayloadSender/assets/168917709/9c096c36-d54e-4f42-a99f-33fadfdd6786)
 
