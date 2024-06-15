@@ -4,7 +4,8 @@
 
 Fork from [valentinbreiz](https://github.com/valentinbreiz/PS4-Payload-Sender)
 
-![image](https://github.com/DjPopol/EzPayloadSender/assets/168917709/fc027be2-d240-4629-9da7-b89adde68b8d)
+![EzPayloadSenderv1 00_3](https://github.com/DjPopol/EzPayloadSender/assets/168917709/d94c7ad7-8565-43e0-9ee4-813720d08655)
+
 
 # Requirements
 - GoldenHEN activated on PS4 (or payload who have BIN Loader Server activated).
@@ -19,15 +20,33 @@ Fork from [valentinbreiz](https://github.com/valentinbreiz/PS4-Payload-Sender)
 - Code has been reorganized
 - Remove Connect button ( it do that when you click on send ).
 - Add Cancel Button
+- Add Check update at startup and install
+- Add button Update
 
 # Config
 - Default Port is 9090.
 
 # Screenshots
-![image](https://github.com/DjPopol/EzPayloadSender/assets/168917709/ed6f046d-4d16-4cf4-bf6e-642132fe64f1)
+# Start
+![EzPayloadSenderv1 00](https://github.com/DjPopol/EzPayloadSender/assets/168917709/5da906a8-8098-4307-99d5-72ed6eb070bf)
 
-![image](https://github.com/DjPopol/EzPayloadSender/assets/168917709/66a9a8e2-3d71-496e-a6e5-2fd343f4ae5b)
+# IP Address OK
+![EzPayloadSenderv1 00_2](https://github.com/DjPopol/EzPayloadSender/assets/168917709/6822ce28-cb87-482c-a966-76e5669e0fa3)
 
-![image](https://github.com/DjPopol/EzPayloadSender/assets/168917709/730d3c23-d70f-4e0b-b3a4-dc37961cfb78)
+# Payload OK
+![EzPayloadSenderv1 00_3](https://github.com/DjPopol/EzPayloadSender/assets/168917709/0cc9dd6f-743e-4aac-8ac9-c1a42b1daae5)
 
-![image](https://github.com/DjPopol/EzPayloadSender/assets/168917709/aeb39f0b-30bd-4b70-893d-543e28c39b60)
+# Send Payload
+
+![EzPayloadSenderv1 00_4](https://github.com/DjPopol/EzPayloadSender/assets/168917709/1d390554-5228-49b3-98fa-08a74e4cc2d6)
+
+# UPDATE 
+
+![EzPayloadSenderv1 00_6](https://github.com/DjPopol/EzPayloadSender/assets/168917709/66057a8c-3b01-4873-a739-eef9594620b6)
+
+
+![EzPayloadSenderv1 00_5](https://github.com/DjPopol/EzPayloadSender/assets/168917709/9c096c36-d54e-4f42-a99f-33fadfdd6786)
+
+![EzPayloadSenderv1 00_7](https://github.com/DjPopol/EzPayloadSender/assets/168917709/337719ea-be08-4b55-9b61-c83ef7ea6d38)
+
+![EzPayloadSenderv1 00_8](https://github.com/DjPopol/EzPayloadSender/assets/168917709/efaaa946-6d78-4c3d-8ee7-056f4fabd037)
