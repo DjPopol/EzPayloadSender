@@ -20,6 +20,8 @@ Fork from [valentinbreiz](https://github.com/valentinbreiz/PS4-Payload-Sender)
 - Code has been reorganized
 - Remove Connect button ( it do that when you click on send ).
 - Add Cancel Button
+- Add Check update at startup and install
+- Add button Update
 
 # Config
 - Default Port is 9090.
