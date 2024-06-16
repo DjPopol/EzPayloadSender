@@ -45,5 +45,19 @@ namespace EzPayloadSender.Helpers
             return assembly.GetName().Version;
 #pragma warning restore CS8603 // Existence possible d'un retour de référence null.
         }
+        public static async Task<bool> IsConnectedToInternetAsync()
+        {
+            try
+            {
+                using HttpClient client = new();
+                client.Timeout = TimeSpan.FromSeconds(5);
+                HttpResponseMessage response = await client.GetAsync("https://www.google.com");
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
