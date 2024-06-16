@@ -7,12 +7,21 @@ namespace EzPayloadSender.Helpers
     public  class NetworkTools
     {
         Socket? socket;
-        CancellationTokenSource? cts;
+        CancellationTokenSource cts = new();
         public bool PsConnected;
         #region FUNCTIONS
         public void Cancel()
         {
-            cts?.Cancel();
+            try
+            {
+                cts.Cancel();
+                cts = new CancellationTokenSource(); // Réinitialise pour futures opérations
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
         }
         public async Task<string> Connect2PS4Async(string ip, string port)
         {
@@ -23,14 +32,24 @@ namespace EzPayloadSender.Helpers
                     ReceiveTimeout = 3000,
                     SendTimeout = 3000
                 };
-                await socket.ConnectAsync(new IPEndPoint(IPAddress.Parse(ip), Int32.Parse(port)));
+                await socket.ConnectAsync(new IPEndPoint(IPAddress.Parse(ip), Int32.Parse(port)),cts.Token);
                 PsConnected = true;
                 return string.Empty;
+            }
+            catch (SocketException ex)
+            {
+                PsConnected = false;
+                return $"Socket error: {ex.Message}";
+            }
+            catch (OperationCanceledException)
+            {
+                PsConnected = false;
+                return "Connection was canceled.";
             }
             catch (Exception ex)
             {
                 PsConnected = false;
-                return ex.ToString();
+                return $"Error: {ex.Message}";
             }
         }
         public void DisconnectPayload()
@@ -54,11 +73,26 @@ namespace EzPayloadSender.Helpers
         }
         public async Task SendPayloadAsync(string filename)
         {
-            cts = new CancellationTokenSource();
-            if(socket != null)
-            {
-                await socket.SendFileAsync(filename, cts.Token);
+            try
+            { 
+                if(socket != null)
+                {
+                    await socket.SendFileAsync(filename, cts.Token);
+                }
             }
+            catch (SocketException ex)
+            {
+                Console.WriteLine($"Socket error: {ex.Message}");
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("Sending was canceled.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            return;
         }
         #endregion
         #region STATIC FUNCTIONS

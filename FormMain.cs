@@ -3,6 +3,7 @@ using DpLib.Models;
 using DpLib.Winform;
 using DpLib.Winform.Controls;
 using EzPayloadSender.Helpers;
+using EzPayloadSender.Models;
 using System.Diagnostics;
 
 namespace EzPayloadSender
@@ -22,6 +23,7 @@ namespace EzPayloadSender
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
             networkTools.Cancel();
+            SetSendCancelButtonsVisibility(true);
         }
         async void ButtonSend_Click(object sender, EventArgs e)
         {
@@ -52,7 +54,7 @@ namespace EzPayloadSender
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error opening page: " + ex.Message);
+                DpMessageBox.ShowDialog("Error opening page: " + ex.Message, "Error");
             }
         }
         private void UpdateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -202,14 +204,14 @@ namespace EzPayloadSender
                 string result = await networkTools.Connect2PS4Async(textBoxIpAddress.Text, textBoxPort.Text);
                 if (result != string.Empty)
                 {
-                    MessageBox.Show("Error while connecting.\n" + result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DpMessageBox.ShowDialog("Error while connecting.\n" + result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error while connecting.\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DpMessageBox.ShowDialog("Error while connecting.\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
@@ -218,36 +220,37 @@ namespace EzPayloadSender
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error while sending {labelPayload.Text}!\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DpMessageBox.ShowDialog($"Error while sending {labelPayload.Text}!\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             try
             {
                 networkTools.DisconnectPayload();
-                MessageBox.Show($"{Tools.MyConfig.PayloadFilename} sent successful!", "Sent Payload", MessageBoxButtons.OK);
+                DpMessageBox.ShowDialog($"{Tools.MyConfig.PayloadFilename} sent successful!", "Sent Payload", MessageBoxButtons.OK);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error while disconnecting!\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DpMessageBox.ShowDialog("Error while disconnecting!\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             SetSendCancelButtonsVisibility(true);
             RefreshForm();
         }
         public void SetSendCancelButtonsVisibility(bool sendVisible)
         {
-            buttonCancel.Visible = !sendVisible;
-            buttonSend.Visible = sendVisible;
+
+            Invoke(new Action(() =>
+            {
+                buttonCancel.Visible = !sendVisible;
+                buttonSend.Visible = sendVisible;
+            }));
         }
         async void ShowUpdate()
         {
             if (await Tools.IsConnectedToInternetAsync())
             {
-                DpMessageBox messageBox = new($"{latestInfos.Name} is avaible.\nWould you like to update ?", "New Update avaible", MessageBoxButtons.YesNo, MessageBoxIcon.Question, true, Tools.MyConfig.CheckUpdateOnStartUp)
-                {
-                    CheckBoxText = "Show at startup"
-                };
-                DialogResult = messageBox.ShowDialog();
-                Tools.MyConfig.CheckUpdateOnStartUp = messageBox.CheckBoxChecked;
+                DpMessageBoxResult result = DpMessageBox.ShowDialog($"{latestInfos.Name} is avaible.\nWould you like to update ?", "New Update avaible", "Show at startup", Tools.MyConfig.CheckUpdateOnStartUp, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                Tools.MyConfig.CheckUpdateOnStartUp = result.IsChecked;
                 Tools.MyConfig.Save();
                 if (DialogResult == DialogResult.Yes)
                 {
@@ -266,12 +269,11 @@ namespace EzPayloadSender
             }
             else
             {
-                MessageBox.Show("Internet connexion  required !\nYou must connect to internet and restart application", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DpMessageBox.ShowDialog("Internet connexion  required !\nYou must connect to internet and restart application", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         #endregion
         #region PROPERTIES
-
         readonly NetworkTools networkTools = new();
         ReleaseInfos latestInfos = new();
         #endregion
