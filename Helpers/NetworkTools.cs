@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace EzPayloadSender.Helpers
 {
-    public  class NetworkTools
+    public class NetworkTools
     {
         Socket? socket;
         CancellationTokenSource cts = new();
@@ -32,7 +32,7 @@ namespace EzPayloadSender.Helpers
                     ReceiveTimeout = 3000,
                     SendTimeout = 3000
                 };
-                await socket.ConnectAsync(new IPEndPoint(IPAddress.Parse(ip), Int32.Parse(port)),cts.Token);
+                await socket.ConnectAsync(new IPEndPoint(IPAddress.Parse(ip), Int32.Parse(port)), cts.Token);
                 PsConnected = true;
                 return string.Empty;
             }
@@ -74,8 +74,8 @@ namespace EzPayloadSender.Helpers
         public async Task SendPayloadAsync(string filename)
         {
             try
-            { 
-                if(socket != null)
+            {
+                if (socket != null)
                 {
                     await socket.SendFileAsync(filename, cts.Token);
                 }

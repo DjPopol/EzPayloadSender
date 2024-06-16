@@ -112,7 +112,7 @@ namespace DpLib.Winform.Controls
                     space = (spaceTotal - (btnYes.Width + btnCancel.Width + 5)) / 2;
                     btnYes.Location = new Point(space, buttonY);
                     btnCancel.Location = new Point(btnYes.Location.X + btnYes.Width + 5, buttonY);
-                    
+
                     break;
                 case MessageBoxButtons.YesNo:
                     btnYes.Visible = true;
@@ -163,9 +163,9 @@ namespace DpLib.Winform.Controls
         }
         public static DpMessageBoxResult ShowDialog(string message, string caption, string checkBoxText, bool isChecked, MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.None)
         {
-            DpMessageBox messageBox = new(message, caption, buttons, icon, true , isChecked);
+            DpMessageBox messageBox = new(message, caption, buttons, icon, true, isChecked);
             messageBox.CheckBoxText = checkBoxText;
-            DialogResult result =  messageBox.ShowDialog();
+            DialogResult result = messageBox.ShowDialog();
             return new() { DialogResult = result, IsChecked = messageBox.CheckBoxChecked };
         }
     }
