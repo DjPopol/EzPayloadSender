@@ -13,15 +13,9 @@ Fork from [valentinbreiz](https://github.com/valentinbreiz/PS4-Payload-Sender)
 - .Net 8.0.
 
 # Change Log
-- Rewriting all code
-- Check Ip Address and Port
-- Add config (config is save and load at start, don't need to config anymore if you don't need change something).
-- Cleaning
-- Code has been reorganized
-- Remove Connect button ( it do that when you click on send ).
-- Add Cancel Button
-- Add Check update at startup and install
-- Add button Update
+- Fix Cancel Button.
+- Fix Version finder
+- Use DpMessageBox instead of Standard
 
 # Config
 - Default Port is 9090.
