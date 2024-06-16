@@ -196,44 +196,53 @@ namespace EzPayloadSender
             buttonBrowse.Enabled = isIpAdressOk && isPortOk;
             buttonSend.Enabled = isIpAdressOk && isPortOk && isPayloadOk;
         }
-        async Task Send()
+        void Send()
         {
-            SetSendCancelButtonsVisibility(false);
-            try
+
+            Invoke(new Action(async () =>
             {
-                string result = await networkTools.Connect2PS4Async(textBoxIpAddress.Text, textBoxPort.Text);
-                if (result != string.Empty)
+                buttonCancel.Enabled = true;
+                SetSendCancelButtonsVisibility(false);
+                try
                 {
-                    DpMessageBox.ShowDialog("Error while connecting.\n" + result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string result = await networkTools.Connect2PS4Async(textBoxIpAddress.Text, textBoxPort.Text);
+                    if (result != string.Empty)
+                    {
+                        buttonCancel.Enabled = false;
+                        DpMessageBox.ShowDialog("Error while connecting.\n" + result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    buttonCancel.Enabled = false;
+                    DpMessageBox.ShowDialog("Error while connecting.\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-            }
-            catch (Exception ex)
-            {
-                DpMessageBox.ShowDialog("Error while connecting.\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            try
-            {
-                await networkTools.SendPayloadAsync(Tools.MyConfig.PayloadPathFilename);
-            }
-            catch (Exception ex)
-            {
-                DpMessageBox.ShowDialog($"Error while sending {labelPayload.Text}!\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            try
-            {
-                networkTools.DisconnectPayload();
-                DpMessageBox.ShowDialog($"{Tools.MyConfig.PayloadFilename} sent successful!", "Sent Payload", MessageBoxButtons.OK);
-            }
-            catch (Exception ex)
-            {
-                DpMessageBox.ShowDialog("Error while disconnecting!\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            SetSendCancelButtonsVisibility(true);
-            RefreshForm();
+                try
+                {
+                    await networkTools.SendPayloadAsync(Tools.MyConfig.PayloadPathFilename);
+                }
+                catch (Exception ex)
+                {
+                    buttonCancel.Enabled = false;
+                    DpMessageBox.ShowDialog($"Error while sending {labelPayload.Text}!\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    buttonCancel.Enabled = false;
+                    networkTools.DisconnectPayload();
+                    DpMessageBox.ShowDialog($"{Tools.MyConfig.PayloadFilename} sent successful!", "Sent Payload", MessageBoxButtons.OK);
+                }
+                catch (Exception ex)
+                {
+                    buttonCancel.Enabled = false;
+                    DpMessageBox.ShowDialog("Error while disconnecting!\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                SetSendCancelButtonsVisibility(true);
+                RefreshForm();
+            }));
         }
         public void SetSendCancelButtonsVisibility(bool sendVisible)
         {
