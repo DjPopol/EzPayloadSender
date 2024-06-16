@@ -1,4 +1,4 @@
-# EzPayload Sender v1.00
+# Ez Payload Sender v1.00
 
 # Send payload to your PS4
 
